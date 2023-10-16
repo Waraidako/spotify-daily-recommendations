@@ -1,4 +1,5 @@
 import * as tokenHandler from "./token-handler.js"
+import { log } from "./main.js"
 
 const clientId = "c51c8fdaa8434884896fee43825e36c0";
 const clientSecret = "1b2fde74a4b543abaae0d258ae500ee3";
@@ -14,13 +15,60 @@ async function fetchWebApi(endpoint, method, body) {
     return await res.json();
 }
 
-async function getTopTracks(){
+async function getTopTracks(limit){
     // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
     return (await fetchWebApi(
-        'v1/me/top/tracks?time_range=short_term&limit=15', 'GET'
+        'v1/me/top/tracks?time_range=short_term&limit=' + limit.toString(), 'GET'
     )).items;
 }
 
-export async function generateRecommendations() {
+async function createPlaylist(tracksUri){
+    const { id: user_id } = await fetchWebApi('v1/me', 'GET')
+    const playlist = await fetchWebApi(
+        `v1/users/${user_id}/playlists`, 'POST', {
+            "name": "Recommendation playlist",
+            "description": "Daily/generated recommendations playlist",
+            "public": false
+        })
 
+    await fetchWebApi(
+        `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(',')}`,
+        'POST'
+    );
+
+    return playlist;
+}
+
+async function getRecommendations(topTracksIds, limit){
+    // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+    return (await fetchWebApi(
+        `v1/recommendations?limit=${limit}&seed_tracks=${topTracksIds.join(',')}`, 'GET'
+    )).tracks;
+}
+
+
+export async function generateRecommendations() {
+    log("Generating...");
+    const topTracks = await getTopTracks(15);
+    let topTracksIds = [];
+    log("Fetched top tracks...");
+    topTracks.forEach((track) => {
+        topTracksIds.push(track.id);
+    });
+    const recommendedTracks1 = await getRecommendations(topTracksIds.slice(0, 5), 5);
+    const recommendedTracks2 = await getRecommendations(topTracksIds.slice(5, 10), 5);
+    const recommendedTracks3 = await getRecommendations(topTracksIds.slice(10, 15), 5);
+    let tracksUri = []
+    recommendedTracks1.forEach((track) => {
+        tracksUri.push(track.uri);
+    })
+    recommendedTracks2.forEach((track) => {
+        tracksUri.push(track.uri);
+    })
+    recommendedTracks3.forEach((track) => {
+        tracksUri.push(track.uri);
+    })
+    log("Fetched recommendations, adding to playlist...");
+    await createPlaylist(tracksUri);
+    log("Generated recommendations");
 }

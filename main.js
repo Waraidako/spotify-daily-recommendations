@@ -34,10 +34,6 @@ if (!refreshToken) {
     })
 }
 
-function log(message) {
+export function log(message) {
     document.getElementById("log").innerHTML += `<p>> ${message}</p>`
 }
-
-log("test");
-log("test2");
-log("test3");
