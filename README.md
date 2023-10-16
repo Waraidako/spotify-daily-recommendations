@@ -5,5 +5,7 @@ Still in development
 
 Current state - working "Generate recommendations" button. It makes a new playlist, currently it does not check if the playlist is already present
 
-TODO - Add refreshing at 12AM
-     - Add a check if the "Recommendations playlist" is already present and refresh if it is
+TODO
+- Add refreshing at 12AM
+- Add a check if the "Recommendations playlist" is already present and refresh if it is
+- Custom amount of recommended tracks
