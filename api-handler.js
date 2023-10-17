@@ -47,28 +47,26 @@ async function getRecommendations(topTracksIds, limit){
 }
 
 
-export async function generateRecommendations() {
-    log("Generating...");
-    const topTracks = await getTopTracks(15);
+export async function generateRecommendations(amount) {
+    log("generating...");
+    const topTracks = await getTopTracks(amount);
     let topTracksIds = [];
-    log("Fetched top tracks...");
+    log("fetched top tracks...");
     topTracks.forEach((track) => {
         topTracksIds.push(track.id);
     });
-    const recommendedTracks1 = await getRecommendations(topTracksIds.slice(0, 5), 5);
-    const recommendedTracks2 = await getRecommendations(topTracksIds.slice(5, 10), 5);
-    const recommendedTracks3 = await getRecommendations(topTracksIds.slice(10, 15), 5);
-    let tracksUri = []
-    recommendedTracks1.forEach((track) => {
+    const recommendedTracks = [];
+    for (let i = 0; i <= amount; i += 5) {
+        const recommended = await getRecommendations(topTracksIds.slice(i, i + 5), 5);
+        recommended.forEach((track) => {
+            recommendedTracks.push(track);
+        })
+    }
+    let tracksUri = [];
+    recommendedTracks.forEach((track) => {
         tracksUri.push(track.uri);
     })
-    recommendedTracks2.forEach((track) => {
-        tracksUri.push(track.uri);
-    })
-    recommendedTracks3.forEach((track) => {
-        tracksUri.push(track.uri);
-    })
-    log("Fetched recommendations, adding to playlist...");
+    log("fetched recommendations, adding to playlist...");
     await createPlaylist(tracksUri);
-    log("Generated recommendations");
+    log("generated recommendations");
 }

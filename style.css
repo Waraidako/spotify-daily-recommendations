@@ -25,10 +25,36 @@ body {
 
 button {
   font-family: inherit;
+  background-color: #1c1c1c;
+  color: white;
+  border: 1px solid white;
+  border-radius: 3px;
+}
+
+button:hover {
+  color: darkgrey;
+  border-color: darkgray;
+  transition-duration: 0.1s;
 }
 
 #log {
   line-height: 25%;
-  margin-top: 3%;
-  margin-left: 10px;
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+#logout {
+  position: absolute;
+  right: 1%;
+  top: 1%;
+}
+
+input {
+  background-color: #1c1c1c;
+  border: 1px solid white;
+  border-radius: 3px;
+}
+
+#log_message {
+  margin-left: 1px;
 }

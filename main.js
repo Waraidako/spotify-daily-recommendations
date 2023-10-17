@@ -12,6 +12,7 @@ if (refreshToken) {
     const accessToken = await tokenHandler.getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken);
     const profile = await tokenHandler.fetchProfile(accessToken);
     tokenHandler.populateUI(profile);
+    log("logged in");
 } else if (code) {
     const refreshToken = await tokenHandler.getRefreshToken(clientId, code);
     localStorage.setItem("refreshToken", refreshToken);
@@ -24,7 +25,7 @@ document.getElementById("logout").onclick = function () {
 }
 
 document.getElementById("generate").onclick = function() {
-    apiHandler.generateRecommendations();
+    apiHandler.generateRecommendations(15);
 }
 
 if (!refreshToken) {
@@ -32,8 +33,12 @@ if (!refreshToken) {
     buttons.forEach((button) => {
         button.hidden = true;
     })
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => {
+        input.hidden = true;
+    })
 }
 
 export function log(message) {
-    document.getElementById("log").innerHTML += `<p>> ${message}</p>`
+    document.getElementById("log").innerHTML += `<p id="log_message">> ${message}</p>`
 }
