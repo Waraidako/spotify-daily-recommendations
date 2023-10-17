@@ -38,23 +38,37 @@ button:hover {
 }
 
 #log {
+  text-align: left;
   line-height: 25%;
-  margin-top: 1%;
-  margin-left: 1%;
+  top: 1%;
+  left: 1%;
 }
 
 #logout {
   position: absolute;
-  right: 1%;
   top: 1%;
+  right: 1%;
+  margin: 0;
 }
 
 input {
   background-color: #1c1c1c;
   border: 1px solid white;
   border-radius: 3px;
+  color: white;
+  width: 50px;
 }
 
-#log_message {
-  margin-left: 1px;
+header {
+  text-align:center;
+}
+
+#login-info {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  margin: 0;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: white;
 }

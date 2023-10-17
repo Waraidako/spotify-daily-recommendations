@@ -14,7 +14,7 @@ const permissions = [
     "user-read-recently-played",
     "user-library-read",
     "user-library-modify"
-];
+]; // will delete unnecessary later
 
 export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) { //to fix
     const params = new URLSearchParams();

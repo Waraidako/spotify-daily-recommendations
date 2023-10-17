@@ -48,16 +48,20 @@ async function getRecommendations(topTracksIds, limit){
 
 
 export async function generateRecommendations(amount) {
-    log("generating...");
+    log("generating " + amount.toString() + " tracks...");
     const topTracks = await getTopTracks(amount);
     let topTracksIds = [];
     log("fetched top tracks...");
     topTracks.forEach((track) => {
         topTracksIds.push(track.id);
     });
+    console.log(topTracksIds);
+    console.log(topTracksIds.slice(0, 5));
     const recommendedTracks = [];
-    for (let i = 0; i <= amount; i += 5) {
+    for (let i = 0; i < amount; i += 5) {
         const recommended = await getRecommendations(topTracksIds.slice(i, i + 5), 5);
+        console.log(typeof(recommended));
+        console.log(recommended);
         recommended.forEach((track) => {
             recommendedTracks.push(track);
         })
@@ -69,4 +73,5 @@ export async function generateRecommendations(amount) {
     log("fetched recommendations, adding to playlist...");
     await createPlaylist(tracksUri);
     log("generated recommendations");
+    return true;
 }

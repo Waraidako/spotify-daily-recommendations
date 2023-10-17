@@ -7,13 +7,28 @@
     <link rel="stylesheet" href="./style.css" type="text/css">
   </head>
   <body>
-    <div id="ui">
-      <p>Logged in as <a href="/login.html" id="login">a nobody (login)</a></p><br>
-      <input type="text" placeholder="amount">
-      <button id="generate">Generate Recommendations</button>
-    </div>
-    <button id="logout">Logout</button>
+
     <div id="log"><p>Current log</p><br></div>
+    <div id="login-info">
+      <p>Logged in as <a href="/login.html" id="login">a nobody (login)</a></p><br><br>
+    </div>
+    <div id="logout">
+      <button>Logout</button>
+    </div>
+    <div id="ui">
+      <table>
+        <tr>
+          <td>Enter track amount -></td>
+          <td><input type="text" placeholder="15" id="amount" min="1" max="50"></td>
+        </tr>
+      </table>
+      <br>
+      <button id="generate" style="width:100%">Generate Recommendations</button>
+      <br><br>
+      <button id="save" style="width:100%">Save track amount</button>
+      <br><br>
+      <button id="reset" style="width:100%">Reset track amount</button>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
