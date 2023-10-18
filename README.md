@@ -9,5 +9,6 @@ If you for some reason stumbled on this repository and have any ideas on what to
 
 TODO
 - Add refreshing at 12AM
+- (not sure if want to do) Scrambled recommendation - randomize the top tracks array before seeding it to recommendations
 - <strike>Add a check if the "Recommendations playlist" is already present and refresh if it is</strike>
 - <strike>Custom amount of recommended tracks</strike>
