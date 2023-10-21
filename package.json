@@ -10,5 +10,13 @@
   },
   "devDependencies": {
     "vite": "^4.4.5"
-  }
+  },
+  "dependencies": {
+    "moment": "^2.29.4"
+  },
+  "description": "Provides a daily playlist of recommendations based on your top tracks (not 6 themed like Spotify has)",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
