@@ -28,11 +28,11 @@ async function getTopTracks(limit){
     )).items;
 }
 
-async function createPlaylist(tracksUri){
+async function createPlaylist(tracksUri, playlistName){
     const { id: user_id } = await fetchWebApi('v1/me', 'GET')
     const playlist = await fetchWebApi(
         `v1/users/${user_id}/playlists`, 'POST', {
-            "name": "Recommendations playlist",
+            "name": playlistName,
             "description": "Daily/generated recommendations playlist",
             "public": false
         })
@@ -82,14 +82,30 @@ async function refreshRecommendations(tracksUri, playlistId) {
     })
 }
 
-export async function generateRecommendations(amount) {
-    log("generating " + amount.toString() + " tracks...");
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+export async function generateRecommendations(amount, playlistName, type) {
+    if(type == 1) {
+        log("generating " + amount.toString() + " tracks...");
+    } else {
+        log("generating " + amount.toString() + ' "shuffled" tracks...');
+    }
     const topTracks = await getTopTracks(amount);
     let topTracksIds = [];
     log("fetched top tracks...");
     topTracks.forEach((track) => {
         topTracksIds.push(track.id);
     });
+    if(type == 2) {
+        shuffle(topTracks);
+    }
     const recommendedTracks = [];
     for (let i = 0; i < amount; i += 5) {
         const recommended = await getRecommendations(topTracksIds.slice(i, i + 5), 5);
@@ -105,7 +121,7 @@ export async function generateRecommendations(amount) {
     const playlists = await getUserPlaylists();
     let playlistPresent = "";
     playlists.forEach((playlist) => {
-        if (playlist.name == "Recommendations playlist")
+        if (playlist.name == playlistName)
             playlistPresent = playlist;
     })
     if (playlistPresent) {
@@ -113,7 +129,7 @@ export async function generateRecommendations(amount) {
         await refreshRecommendations(tracksUri, playlistPresent.id);
     } else {
         log("creating the recommendations playlist...");
-        await createPlaylist(tracksUri);
+        await createPlaylist(tracksUri, playlistName);
     }
     log("generated recommendations");
     return true;

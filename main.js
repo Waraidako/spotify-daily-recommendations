@@ -60,10 +60,17 @@ document.getElementById("logout").onclick = function () {
     window.location.reload();
 }
 
-document.getElementById("generate").onclick = function() {
+document.getElementById("generate").onclick = async function() {
     let amountPrototype = parseInt(document.getElementById("amount").value);
     let amount = !isNaN(amountPrototype) ? amountPrototype : parseInt(localStorage.getItem("amount"));
-    apiHandler.generateRecommendations(amount);
+    await apiHandler.generateRecommendations(amount, "Recommendations playlist", 1);
+}
+
+document.getElementById("generate_shuffled").onclick = async function() {
+    let amountPrototype = parseInt(document.getElementById("amount").value);
+    let amount = !isNaN(amountPrototype) ? amountPrototype : parseInt(localStorage.getItem("amount"));
+    await apiHandler.generateRecommendations(amount, "Daily Shuffle", 2);
+
 }
 
 document.getElementById("save").onclick = function() {
