@@ -62,17 +62,6 @@ async function refreshRecommendations(tracksUri, playlistId) {
     playlistTracks.forEach((track) => {
         playlistTracksUri.push({"uri" : track.track.uri});
     });
-    // await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`,  {
-    //     method: 'DELETE',
-    //     headers: {
-    //         Authorization: `Bearer ${await tokenHandler.getAccessTokenViaRefreshToken(clientId, clientSecret, localStorage.getItem("refreshToken"))}`,
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         "tracks": playlistTracksUri,
-    //         "snapshot_id": await getSnapshot(playlistId)
-    //     })
-    // });
     await fetchWebApi(`v1/playlists/${playlistId}/tracks`, 'DELETE', {
         "tracks": playlistTracksUri,
         "snapshot_id": await getSnapshot(playlistId)

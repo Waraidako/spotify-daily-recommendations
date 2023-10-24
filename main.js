@@ -1,8 +1,12 @@
-import * as cookieHandler from './cookie-handler.js';
 import * as tokenHandler from './token-handler.js';
 import * as apiHandler from "./api-handler.js";
 import {generateRecommendations} from "./api-handler.js";
 import moment from 'moment';
+import Cookies from 'js-cookie';
+
+//Cookies.set('test', 'success', {expires: 14});
+//Cookies.remove('test');
+console.log(Cookies.get('test'));
 
 const clientId = "c51c8fdaa8434884896fee43825e36c0";
 const clientSecret = "1b2fde74a4b543abaae0d258ae500ee3";
