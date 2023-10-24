@@ -4,6 +4,7 @@ Provides a daily playlist of recommendations based on your top tracks (not 6 the
 Still in development, works on localhost for now, planning to host a domain (likely will be using GitHub's hosting)
 
 Current state - working "Generate recommendations" button. Creates the "Recommendations playlist" if there isn't one, and refreshes it if it exists.
+Same thing with "shuffled" recommendations, but top tracks are shuffled before fetching recommendations.
 
 If you for some reason stumbled on this repository and have any ideas on what to add/what to improve, please message me <a href="waraidako.god@gmail.com">waraidako.god@gmail.com</a>
 

@@ -1,4 +1,6 @@
-const permissions = [
+import Cookies from 'js-cookie'
+
+const permissions = [ // will delete unnecessary later
     "user-read-private",
     "user-read-email",
     "ugc-image-upload",
@@ -14,7 +16,7 @@ const permissions = [
     "user-read-recently-played",
     "user-library-read",
     "user-library-modify"
-]; // will delete unnecessary later
+];
 
 export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) { //to fix
     const params = new URLSearchParams();
@@ -30,7 +32,8 @@ export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refr
         body: params
     });
     const { access_token, refresh_token } = await result.json();
-    localStorage.setItem("refreshToken", refresh_token);
+    //localStorage.setItem("refreshToken", refresh_token);
+    Cookies.set("refreshToken", refresh_token, {expires: 14, path: '/'});
     return access_token;
 }
 

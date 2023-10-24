@@ -1,4 +1,3 @@
-import * as cookieHandler from './cookie-handler.js'
 import * as tokenHandler from './token-handler.js'
 
 const clientId = "c51c8fdaa8434884896fee43825e36c0";
