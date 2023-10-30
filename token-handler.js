@@ -16,7 +16,7 @@ const permissions = [
     "user-library-modify"
 ]; // will delete unnecessary later
 
-export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) { //to fix
+export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("grant_type", "refresh_token");

@@ -8,7 +8,12 @@ const clientId = "c51c8fdaa8434884896fee43825e36c0";
 const clientSecret = "1b2fde74a4b543abaae0d258ae500ee3";
 const params = new URLSearchParams(window.location.search);
 let code = params.get("code");
+<<<<<<< Updated upstream
 const refreshToken = localStorage.getItem("refreshToken");
+=======
+//const refreshToken = localStorage.getItem("refreshToken");
+const refreshToken = Cookies.get('refreshToken', {path: '/'});
+>>>>>>> Stashed changes
 
 function setNewTimeout(time) {
     setTimeout(
