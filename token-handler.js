@@ -40,7 +40,6 @@ export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refr
 export async function redirectToAuthCodeFlow(clientId) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
-
     localStorage.setItem("verifier", verifier);
 
     const params = new URLSearchParams();
@@ -50,6 +49,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     params.append("scope", permissions.join(" "));
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
+
 
     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
 }
@@ -67,6 +67,7 @@ function generateCodeVerifier(length) {
 async function generateCodeChallenge(codeVerifier) {
     const data = new TextEncoder().encode(codeVerifier);
     const digest = await window.crypto.subtle.digest('SHA-256', data);
+
     return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
