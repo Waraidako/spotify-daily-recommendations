@@ -1,5 +1,8 @@
 import Cookies from 'js-cookie'
 
+//const redirect = 'https://192.168.28.134:5173/callback'
+const redirect = 'https://localhost:5173/callback'
+
 const permissions = [ // will delete unnecessary later
     "user-read-private",
     "user-read-email",
@@ -45,7 +48,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "http://localhost:5173/callback");
+    params.append("redirect_uri", redirect);
     params.append("scope", permissions.join(" "));
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
