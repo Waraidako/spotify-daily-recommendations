@@ -50,7 +50,7 @@ input {
 
 #log {
     text-align: left;
-    line-height: 25%;
+    line-height: 100%;
     left: 1%;
     direction: ltr;
 }
@@ -76,12 +76,17 @@ p {
     direction: ltr;
 }
 
+span {
+    direction: ltr;
+}
+
 #scrollable {
     height: 200px;
     width: 100%;
     overflow: auto;
     line-break: auto;
     direction: rtl;
+
 }
 
 #ui {

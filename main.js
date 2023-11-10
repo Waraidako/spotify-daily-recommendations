@@ -104,9 +104,9 @@ document.getElementById("reset").onclick = function() {
 }
 
 export function log(message) {
-    let msg = document.createElement("p");
+    let msg = document.createElement("span");
     msg.id = "log_message";
-    msg.innerHTML = `> ${message}`;
-    document.getElementById("scrollable").appendChild(msg);
-    document.getElementById("scrollable").scrollTop = msg.offsetHeight + msg.offsetTop;
+    msg.innerHTML = `> ${message}<br>`;
+    document.getElementById("scrollable-content").appendChild(msg);
+    document.getElementById("scrollable-content").scrollTop = msg.offsetHeight + msg.offsetTop;
 }

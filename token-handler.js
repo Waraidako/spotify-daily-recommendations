@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
-//const redirect = 'https://192.168.28.134:5173/callback'
-const redirect = 'https://localhost:5173/callback'
+const redirect = 'https://192.168.28.134:5173/callback'
+//const redirect = 'https://localhost:5173/callback'
 
 const permissions = [ // will delete unnecessary later
     "user-read-private",
