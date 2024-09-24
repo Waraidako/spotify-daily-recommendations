@@ -3,7 +3,7 @@ import { log } from "./main.js"
 import Cookies from 'js-cookie'
 
 const clientId = "c51c8fdaa8434884896fee43825e36c0";
-const clientSecret = "1b2fde74a4b543abaae0d258ae500ee3";
+const clientSecret = "1b2fde74a4b543abaae0d258ae500ee3"; //damn free secret for a free API yippee
 
 async function fetchWebApi(endpoint, method, body) {
     const res = await fetch(`https://api.spotify.com/${endpoint}`, {

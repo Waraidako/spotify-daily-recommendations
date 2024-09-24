@@ -3,15 +3,15 @@ import Cookies from 'js-cookie'
 const redirect = 'https://localhost:5173/callback'
 
 const permissions = [ // will delete unnecessary later
-    "user-read-private",
-    "ugc-image-upload",
-    "playlist-read-private",
-    "playlist-read-collaborative",
-    "playlist-modify-public",
-    "playlist-modify-private",
-    "user-top-read",
-    "user-library-read",
-    "user-library-modify"
+    "user-read-private",               //read/modify private playlists
+    "ugc-image-upload",                //update artwork on  gen. playlists
+    "playlist-read-private",           // ] both for checking if
+    "playlist-read-collaborative",     // ] gen. playlists are there
+    "playlist-modify-public",          // } for creating playlists
+    "playlist-modify-private",         // }
+    "user-top-read",                   //read history to get recommendations
+    "user-library-read",               //???
+    "user-library-modify"              //???
 ];
 
 export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) { //to fix
