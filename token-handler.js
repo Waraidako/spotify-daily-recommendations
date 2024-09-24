@@ -1,22 +1,15 @@
 import Cookies from 'js-cookie'
 
-const redirect = 'https://192.168.28.134:5173/callback'
-//const redirect = 'https://localhost:5173/callback'
+const redirect = 'https://localhost:5173/callback'
 
 const permissions = [ // will delete unnecessary later
     "user-read-private",
-    "user-read-email",
     "ugc-image-upload",
-    "user-read-playback-state",
-    "user-modify-playback-state",
-    "user-read-currently-playing",
     "playlist-read-private",
     "playlist-read-collaborative",
     "playlist-modify-public",
     "playlist-modify-private",
     "user-top-read",
-    "user-read-playback-position",
-    "user-read-recently-played",
     "user-library-read",
     "user-library-modify"
 ];

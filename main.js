@@ -47,7 +47,7 @@ if (refreshToken && refreshToken !== 'undefined') {
     const refreshToken = await tokenHandler.getRefreshToken(clientId, code);
     //localStorage.setItem("refreshToken", refreshToken);
     Cookies.set("refreshToken", refreshToken, {expires: 14});
-    //window.location.replace('/');
+    window.location.replace('/');
 }
 
 if (!refreshToken || refreshToken === 'undefined') {

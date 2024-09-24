@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "esbuild": "0.19.6",
     "vite": "^4.4.5",
     "vite-plugin-mkcert": "^1.16.0"
   },
