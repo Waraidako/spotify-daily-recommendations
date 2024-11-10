@@ -1,9 +1,12 @@
 # daily-recommendations
-![image](https://github.com/user-attachments/assets/c27c23d7-390c-459f-a003-fe4a0abcbf05)
-Provides playlists of recommendations based on your top tracks in Spotfify (because there isn't enough inbuilt recommendations playlists)
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/d36e3436-b4d2-4703-b2ce-704aeda7d8d7"/>
+</p>
+Provides playlists of recommendations based on your top tracks in Spotfify (because there isn't enough inbuilt recommendations playlists).<br>
+The design is fairly simple, I agree.
 
 Works on localhost:5173 for now, planning to host a domain.
-
 <h3>Current features</h3>
 <ul>
     <li><b>Generate Recommendations</b> - creates/refreshes the "Recommendations playlist" playlist, which contains recommendations based on user's top tracks</li>
