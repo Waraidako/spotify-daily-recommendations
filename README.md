@@ -1,15 +1,14 @@
 # daily-recommendations
-Provides a daily playlist of recommendations based on your top tracks (not 6 themed like Spotify has)
+![image](https://github.com/user-attachments/assets/c27c23d7-390c-459f-a003-fe4a0abcbf05)
+Provides playlists of recommendations based on your top tracks in Spotfify (because there isn't enough inbuilt recommendations playlists)
 
-Still in development, works on localhost for now, planning to host a domain (likely will be using GitHub's hosting)
+Works on localhost:5173 for now, planning to host a domain.
 
-Current state - working "Generate recommendations" button. Creates the "Recommendations playlist" if there isn't one, and refreshes it if it exists.
-Same thing with "shuffled" recommendations, but top tracks are shuffled before fetching recommendations.
+<h3>Current features</h3>
+<ul>
+    <li><b>Generate Recommendations</b> - creates/refreshes the "Recommendations playlist" playlist, which contains recommendations based on user's top tracks</li>
+    <li><b>Generate "shuffled"</b> - creates/refreshes the "Daily Shuffle" playlist, which contains recommendations based on user's top tracks <b>shuffled</b></li>
+    <li><b>Current Log</b> - logs everything that the app has done so far</li>
+</ul>
 
 If you for some reason stumbled on this repository and have any ideas on what to add/what to improve, please message me <a href="waraidako.god@gmail.com">waraidako.god@gmail.com</a>
-
-TODO
-- Add refreshing at 12AM
-- <strike>(not sure if want to do) Scrambled recommendation - randomize the top tracks array before seeding it to recommendations</strike>
-- <strike>Add a check if the "Recommendations playlist" is already present and refresh if it is</strike>
-- <strike>Custom amount of recommended tracks</strike>
