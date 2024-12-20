@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 const redirect = 'https://localhost:5173/callback'
 
-const permissions = [ // will delete unnecessary later
+const permissions = [
     "user-read-private",               //read/modify private playlists
     "ugc-image-upload",                //update artwork on  gen. playlists
     "playlist-read-private",           // ] both for checking if
@@ -14,20 +14,39 @@ const permissions = [ // will delete unnecessary later
     "user-library-modify"              //???
 ];
 
-export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) { //to fix
-    const params = new URLSearchParams();
-    params.append("client_id", clientId);
-    params.append("grant_type", "refresh_token");
-    params.append("refresh_token", refreshToken);
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    const result = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: {"Authorization": "Basic " +
-                btoa(clientId + ":" + clientSecret),
-            "Content-Type": "application/x-www-form-urlencoded"},
-        body: params
-    });
-    const { access_token, refresh_token } = await result.json();
+export async function getAccessTokenViaRefreshToken(clientId, clientSecret, refreshToken) { //to fix
+    // const params = new URLSearchParams();
+    // params.append("client_id", clientId);
+    // params.append("grant_type", "refresh_token");
+    // params.append("refresh_token", refreshToken);
+
+    // const result = await fetch("https://accounts.spotify.com/api/token", {
+    //     method: "POST",
+    //     headers: {"Authorization": "Basic " +
+    //             btoa(clientId + ":" + clientSecret),
+    //         "Content-Type": "application/x-www-form-urlencoded"},
+    //     body: params,
+    // });
+    const url = "https://accounts.spotify.com/api/token";
+
+    const payload = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: clientId
+      }),
+    }
+    const body = await fetch(url, payload);
+    //const response = await body.json();
+    const { access_token, refresh_token } = await body.json();
     //localStorage.setItem("refreshToken", refresh_token);
     Cookies.set("refreshToken", refresh_token, {expires: 14});
     return access_token;
@@ -83,7 +102,7 @@ export async function getRefreshToken(clientId, code) {
     const result = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
         headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: params
+        body: params,
     });
 
     const res = await result.json();

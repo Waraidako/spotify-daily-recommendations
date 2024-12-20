@@ -74,16 +74,15 @@ document.getElementById("logout").onclick = function () {
 document.getElementById("generate").onclick = async function() {
     let amountPrototype = parseInt(document.getElementById("amount").value);
     //let amount = !isNaN(amountPrototype) ? amountPrototype : parseInt(localStorage.getItem("amount"));
-    let amount = !isNaN(amountPrototype) ? amountPrototype : parseInt(Cookies.get("amount"));
+    let amount = !isNaN(amountPrototype) && amountPrototype >= 1 && amountPrototype <= 100 ? amountPrototype : parseInt(Cookies.get("amount"));
     await apiHandler.generateRecommendations(amount, "Recommendations playlist", 1);
 }
 
 document.getElementById("generate_shuffled").onclick = async function() {
     let amountPrototype = parseInt(document.getElementById("amount").value);
     //let amount = !isNaN(amountPrototype) ? amountPrototype : parseInt(localStorage.getItem("amount"));
-    let amount = !isNaN(amountPrototype) ? amountPrototype : parseInt(Cookies.get("amount"));
+    let amount = !isNaN(amountPrototype) && amountPrototype >= 1 && amountPrototype <= 100 ? amountPrototype : parseInt(Cookies.get("amount"));
     await apiHandler.generateRecommendations(amount, "Daily Shuffle", 2);
-
 }
 
 document.getElementById("save").onclick = function() {

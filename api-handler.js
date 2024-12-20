@@ -3,7 +3,11 @@ import { log } from "./main.js"
 import Cookies from 'js-cookie'
 
 const clientId = "c51c8fdaa8434884896fee43825e36c0";
-const clientSecret = "1b2fde74a4b543abaae0d258ae500ee3"; //damn free secret for a free API yippee
+const clientSecret = "c1fcd813bf1945b5b7a28d519258fb19"; //damn free secret for a free API yippee
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function fetchWebApi(endpoint, method, body) {
     const res = await fetch(`https://api.spotify.com/${endpoint}`, {
@@ -14,7 +18,9 @@ async function fetchWebApi(endpoint, method, body) {
         method,
         body:JSON.stringify(body)
     });
-    return await res.json();
+    const result = await res.json();
+    //Cookies.set("refreshToken", result.refresh_token, {expires: 14});
+    return result;
 }
 
 export async function getUserPlaylists() {
@@ -24,7 +30,6 @@ export async function getUserPlaylists() {
 }
 
 async function getTopTracks(limit){
-    // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
     return (await fetchWebApi(
         `v1/me/top/tracks?time_range=short_term&limit=${limit.toString()}`, 'GET'
     )).items;
@@ -47,11 +52,34 @@ async function createPlaylist(tracksUri, playlistName){
     return playlist;
 }
 
-async function getRecommendations(topTracksIds, limit){
-    // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-recommendations
-    return (await fetchWebApi(
-        `v1/recommendations?limit=${limit}&seed_tracks=${topTracksIds.join(',')}`, 'GET'
-    )).tracks;
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+async function getRecommendations(topTracksIds){
+    // return (await fetchWebApi(
+    //     `v1/recommendations?limit=${limit}&seed_tracks=${topTracksIds.join(',')}`, 'GET'
+    // )).tracks;
+    // ^ in case they bring back recommendations ;(
+
+    // OVERALL LOGIC:
+    // Query each track in search for 50 results 
+    // From the result, get a track in a position of random 3-50
+    // P R O F I T
+    let result = [];
+    console.log(topTracksIds);
+    for (let trackId of topTracksIds){
+        console.log(trackId);
+        const trackName = (await fetchWebApi(
+            `v1/tracks/${trackId}`, 'GET'
+        )).name;
+        console.log(trackName);
+        const searchResult = await fetchWebApi(
+            `v1/search?q=${encodeURIComponent(trackName)}&type=track&limit=50&offset=0`, 'GET'
+        );
+        result.push(searchResult.tracks.items[randomIntFromInterval(2, 50)]);
+    };
+    return result;
 }
 
 async function getSnapshot(playlistId) {
@@ -92,21 +120,23 @@ export async function generateRecommendations(amount, playlistName, type) {
     let topTracksIds = [];
     log("fetched top tracks...");
     topTracks.forEach((track) => {
-        topTracksIds.push(track.id);
+       topTracksIds.push(track.id);
     });
     if(type == 2) {
-        shuffle(topTracks);
+       shuffle(topTracks);
     }
-    const recommendedTracks = [];
+    /*const recommendedTracks = [];
     for (let i = 0; i < amount; i += 5) {
         const recommended = await getRecommendations(topTracksIds.slice(i, i + 5), 5);
         recommended.forEach((track) => {
             recommendedTracks.push(track);
         })
-    }
+    }*/
+    const recommendedTracks = await getRecommendations(topTracksIds);
+
     let tracksUri = [];
     recommendedTracks.forEach((track) => {
-        tracksUri.push(track.uri);
+       tracksUri.push(track.uri);
     })
     log("fetched recommendations, adding to playlist...");
     const playlists = await getUserPlaylists();
@@ -123,5 +153,10 @@ export async function generateRecommendations(amount, playlistName, type) {
         await createPlaylist(tracksUri, playlistName);
     }
     log("generated recommendations");
+
+    // log("fetched top tracks...");
+    // log("fetched recommendations, adding to playlist...");
+    // log("found existing playlist, refreshing...");
+    // log("generated recommendations");
     return true;
 }
